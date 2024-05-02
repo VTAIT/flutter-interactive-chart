@@ -60,6 +60,9 @@ class InteractiveChart extends StatefulWidget {
   /// This provides the width of a candlestick at the current zoom level.
   final ValueChanged<double>? onCandleResize;
 
+  double? extraValueMax;
+  double? extraValueMin;
+
   const InteractiveChart({
     Key? key,
     required this.candles,
@@ -70,6 +73,8 @@ class InteractiveChart extends StatefulWidget {
     this.overlayInfo,
     this.onTap,
     this.onCandleResize,
+    this.extraValueMax = 0,
+    this.extraValueMin = 0,
   })  : this.style = style ?? const ChartStyle(),
         assert(candles.length >= 3,
             "InteractiveChart requires 3 or more CandleData"),
@@ -147,9 +152,9 @@ class _InteractiveChartState extends State<InteractiveChart> {
         }
 
         final maxPrice =
-            candlesInRange.map(highest).whereType<double>().reduce(max);
+            candlesInRange.map(highest).whereType<double>().reduce(max) + extraValueMax;
         final minPrice =
-            candlesInRange.map(lowest).whereType<double>().reduce(min);
+            candlesInRange.map(lowest).whereType<double>().reduce(min) - extraValueMin;
         final maxVol = candlesInRange
             .map((c) => c.volume)
             .whereType<double>()
