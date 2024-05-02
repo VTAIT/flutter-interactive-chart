@@ -60,8 +60,8 @@ class InteractiveChart extends StatefulWidget {
   /// This provides the width of a candlestick at the current zoom level.
   final ValueChanged<double>? onCandleResize;
 
-  double? extraValueMax;
-  double? extraValueMin;
+  final double? extraValueMax;
+  final double? extraValueMin;
 
   const InteractiveChart({
     Key? key,
@@ -152,9 +152,12 @@ class _InteractiveChartState extends State<InteractiveChart> {
         }
 
         final maxPrice =
-            candlesInRange.map(highest).whereType<double>().reduce(max) + extraValueMax;
+            candlesInRange.map(highest).whereType<double>().reduce(max) +
+                widget.extraValueMax!;
         final minPrice =
-            candlesInRange.map(lowest).whereType<double>().reduce(min) - extraValueMin;
+            candlesInRange.map(lowest).whereType<double>().reduce(min) -
+                widget.extraValueMin!;
+                
         final maxVol = candlesInRange
             .map((c) => c.volume)
             .whereType<double>()
