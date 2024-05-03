@@ -35,6 +35,8 @@ class CandleData {
   /// or `clear` methods on the list. Always assign a new list if values
   /// are changed. Otherwise the UI might not be updated.
   List<double?> trends;
+  final bool up;
+  
 
   CandleData({
     required this.timestamp,
@@ -44,6 +46,7 @@ class CandleData {
     this.high,
     this.low,
     List<double?>? trends,
+    this.up = false
   }) : this.trends = List.unmodifiable(trends ?? []);
 
   static List<double?> computeMA(List<CandleData> data, [int period = 7]) {
